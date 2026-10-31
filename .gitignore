@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+certs/
+.env
+.env.*
+!.env.example
+
+# Build output
+/dist
+.dist-releases/
+.frontend-build.*/
+.dist-next.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp

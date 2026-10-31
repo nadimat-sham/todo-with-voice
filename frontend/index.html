@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Todo</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <script>
+      // Day mode unless night was chosen before
+      document.documentElement.dataset.theme = 'day';
+      try {
+        if (localStorage.getItem('vtodo-theme') === 'night') document.documentElement.dataset.theme = 'night';
+        if (localStorage.getItem('vtodo-sidebar') === 'collapsed') document.documentElement.dataset.sidebar = 'collapsed';
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div class="container" id="app-container">
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar" id="app-sidebar">
+        <div class="logo">
+          <a class="brand" href="#dashboard" aria-label="NADIM Voice Todo — Dashboard" data-tip="NADIM Voice Todo">
+            <span class="brand-mark" aria-hidden="true">N.</span>
+            <span class="brand-name sidebar-text">NADIM<small>Voice Todo</small></span>
+          </a>
+          <button type="button" class="mobile-menu-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+        <div class="mobile-navigation" id="mobile-navigation">
+        <nav class="nav-menu" id="primary-navigation">
+          <a href="#dashboard" class="nav-item" data-tab="dashboard" data-tip="Overview of your todo list">
+            <span class="icon"></span> <span class="sidebar-text">Dashboard</span>
+          </a>
+          <a href="#todos" class="nav-item" data-tab="todos" data-tip="Add todos by typing or by voice, then edit, tick off or delete them">
+            <span class="icon"></span> <span class="sidebar-text">Add Todo</span>
+          </a>
+        </nav>
+        <div class="sidebar-footer">
+          <span class="sidebar-user sidebar-text" id="current-user" data-tip="The account you're signed in with"></span>
+          <button type="button" class="sidebar-logout sidebar-password" id="password-btn" data-tip="Change the password you sign in with">
+            <span class="icon"></span> <span class="sidebar-text">Change password</span>
+          </button>
+          <button type="button" class="sidebar-logout" id="logout-btn" data-tip="Sign out of Voice Todo">
+            <span class="icon"></span> <span class="sidebar-text">Log out</span>
+          </button>
+        </div>
+        </div>
+      </aside>
+
+      <!-- Each page renders itself in here (see src/lib/router.js) -->
+      <main class="main-content" id="view"></main>
+    </div>
+
+    <!-- Shared form/confirmation modal (see openFormModal in src/lib/ui.js) -->
+    <dialog class="modal" id="modal"></dialog>
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module" src="/src/index.js"></script>
+  </body>
+</html>

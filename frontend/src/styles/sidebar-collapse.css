@@ -1,0 +1,30 @@
+/* Desktop sidebar collapse (see src/lib/sidebar.js; the toggle button is in
+   each page's title card — styles/page-layout.css). Loaded after
+   dashboard.css so these rules win over its sidebar sizing. Phones keep their
+   own ☰ menu instead, so everything here is desktop-only. */
+
+@media (min-width: 769px) {
+  .sidebar { transition: width .25s ease, padding .25s ease; }
+  .main-content { transition: margin-left .25s ease, width .25s ease; }
+
+  /* ---------- Collapsed: an icon-only strip ---------- */
+  html[data-sidebar='collapsed'] .sidebar { width: 76px; padding-left: 10px; padding-right: 10px; overflow-x: hidden; }
+  html[data-sidebar='collapsed'] .main-content { margin-left: 100px; width: calc(100% - 100px); }
+  html[data-sidebar='collapsed'] .sidebar-text { display: none; }
+
+  html[data-sidebar='collapsed'] .logo { padding: 0 0 14px; margin-bottom: 14px; text-align: center; }
+  html[data-sidebar='collapsed'] .brand { gap: 0; }
+
+  html[data-sidebar='collapsed'] .nav-item { justify-content: center; gap: 0; padding: 11px 0; }
+  html[data-sidebar='collapsed'] .nav-item.active { padding-left: 0; }
+
+  html[data-sidebar='collapsed'] .sidebar-footer { padding-top: 12px; }
+  html[data-sidebar='collapsed'] .sidebar-logout { justify-content: center; gap: 0; padding: 10px 0; }
+  html[data-sidebar='collapsed'] .sidebar-logout::after { display: none; }
+}
+
+/* Mid-width screens use a narrower sidebar (see dashboard.css) — keep the
+   page beside the collapsed strip lined up there too. */
+@media (min-width: 769px) and (max-width: 1200px) {
+  html[data-sidebar='collapsed'] .main-content { margin-left: 96px; width: calc(100% - 96px); }
+}

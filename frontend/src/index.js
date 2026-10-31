@@ -1,0 +1,9 @@
+import '@fontsource-variable/dm-sans';
+import './styles/layout.css';
+import './styles/dashboard.css';
+import './styles/sidebar-collapse.css';
+import './styles/page-layout.css';
+import './lib/theme.js';
+import './lib/sidebar.js';
+import './lib/tooltip.js';
+import './pages/app.js';
