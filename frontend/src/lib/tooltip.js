@@ -40,7 +40,8 @@ function findTip(el) {
   // A data-tip inside the cell (a badge, a button) is more specific than the
   // column name; one outside it (none today) would be less specific.
   if (explicit && (!cell || cell.contains(explicit))) return [explicit, explicit.dataset.tip];
-  if (cell && !cell.closest('.empty-state')) {
+  // A cell spanning several columns (a panel under a row) has no one column to name
+  if (cell && cell.colSpan === 1 && !cell.closest('.empty-state')) {
     const header = columnHeader(cell);
     if (!header) return null;
     const opens = cell.closest('tr.clickable') ? ' · click the row to open it' : '';

@@ -80,6 +80,9 @@ production serve the app over HTTPS.
 - **Record Todo** saves a voice recording with the todo (in the database,
   at most 5 minutes / 10 MB each). Nothing is typed in.
 
+Each todo holds any number of entries of all three kinds — typed, voice to
+text and recordings — added from the todo's row in the list.
+
 ## Passwords
 
 Each account changes its own password with **Change password** at the

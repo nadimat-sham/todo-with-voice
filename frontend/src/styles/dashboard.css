@@ -426,9 +426,8 @@ html[data-theme='day'] .location-edit:hover { border-color: #23766d; background:
 .voice-clock { margin-left: auto; padding: 4px 9px; border-radius: 8px; background: #00000026; color: #fff0d9; font-size: 13px; font-variant-numeric: tabular-nums; }
 .voice-preview { display: flex; align-items: center; gap: 12px; margin: -6px 0 18px; }
 .voice-preview-label { color: #d0d9cf; font-size: 13px; font-weight: 600; }
-.voice-preview .play-btn, .todo-audio-edit .play-btn { margin: 0; }
+.voice-preview .play-btn { margin: 0; }
 .voice-preview [data-remove-recording] { margin-left: auto; }
-.todo-audio-edit .play-btn { margin-bottom: 10px; }
 /* Beats the generic .form-group label / input rules */
 .form-group .check-row { display: flex; align-items: center; gap: 8px; margin: 0; font-weight: 500; cursor: pointer; }
 .form-group .check-row input[type='checkbox'] { flex: none; width: 16px; height: 16px; min-height: 0; margin: 0; padding: 0; border: 0; box-shadow: none; accent-color: #d9534f; }
@@ -436,11 +435,45 @@ html[data-theme='day'] .location-edit:hover { border-color: #23766d; background:
 .replace-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
 .replace-actions .btn[aria-disabled='true'] { opacity: .5; cursor: not-allowed; }
 
+/* A todo's recordings, playable right in its row */
+.row-recordings { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.row-recordings .play-btn { margin: 0; }
+
+/* A todo's entries: the toggle under its title, and the panel under its row */
+.entries-toggle { display: flex; align-items: center; gap: 6px; width: fit-content; margin-top: 6px; padding: 3px 9px 3px 6px; border: 1px solid #ffffff1f; border-radius: 999px; background: #ffffff08; color: #c4cec6; font: inherit; font-size: 11px; font-weight: 500; cursor: pointer; }
+.entries-toggle:hover { border-color: #eab47680; color: #f3e6cf; }
+.entries-toggle .caret { display: inline-block; transition: transform .15s; }
+.entries-toggle.open .caret { transform: rotate(90deg); }
+tr.expanded td { border-bottom-color: transparent; }
+.table .entries-row td { padding: 0 14px 16px; }
+.table tbody tr.entries-row:hover { background: transparent; }
+.entries { margin-left: 120px; padding: 12px 14px; border: 1px solid #ffffff14; border-radius: 12px; background: #00000018; }
+.entry-list { margin: 0 0 10px; padding: 0; list-style: none; }
+.entry { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto auto; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #ffffff0d; }
+.entry:last-child { border-bottom: 0; }
+.entry .status-badge { justify-self: start; }
+.entry-text { white-space: pre-line; overflow-wrap: anywhere; line-height: 1.5; }
+.entry .play-btn { margin: 0; }
+.entry-time { color: #aebbb1; font-size: 11px; white-space: nowrap; }
+.entry-actions { display: flex; gap: 6px; }
+.entries-empty { margin: 0 0 10px; }
+.entry-add { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+@media (max-width: 768px) {
+  /* The table scrolls sideways on phones; keep the panel on screen with it */
+  .entries { position: sticky; left: 14px; width: calc(100vw - 88px); margin-left: 0; }
+  .entry { grid-template-columns: minmax(0, 1fr) auto; }
+  .entry .entry-content { grid-column: 1 / -1; }
+}
+
 /* Play button for a todo's recording, under its title */
 .play-btn { display: flex; width: fit-content; align-items: center; gap: 6px; margin-top: 7px; padding: 4px 10px 4px 7px; border: 1px solid #8daee840; border-radius: 999px; background: #8daee81a; color: #b5cdf1; font: inherit; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; }
 .play-btn:hover { border-color: #b5cdf1; }
 .play-btn svg { width: 13px; height: 13px; fill: currentColor; }
 .play-btn .icon-pause, .play-btn.playing .icon-play { display: none; }
+/* "▶ Recorded 0:02" — the Added by badge of a recorded todo */
+.play-btn.labelled { margin: 0; border-color: #b8a5d040; background: #b8a5d020; color: #cdbfe3; }
+.play-btn.labelled:hover { border-color: #cdbfe3; }
+.play-btn b { font-weight: 600; }
 .play-btn.playing .icon-pause { display: block; }
 
 html[data-theme='day'] .todo-notes,
@@ -449,6 +482,13 @@ html[data-theme='day'] .voice-recorder { border-color: rgba(29,77,71,.16); backg
 html[data-theme='day'] .voice-status { color: #173b37; }
 html[data-theme='day'] .voice-preview-label { color: #35534e; }
 html[data-theme='day'] .voice-clock { background: rgba(29,77,71,.1); color: #173b37; }
+html[data-theme='day'] .entries-toggle { border-color: rgba(29,77,71,.18); background: rgba(255,255,255,.5); color: #35534e; }
+html[data-theme='day'] .entries-toggle:hover { border-color: #2b7c73; color: #12403b; }
+html[data-theme='day'] .entries { border-color: rgba(29,77,71,.14); background: rgba(255,255,255,.4); }
+html[data-theme='day'] .entry { border-color: rgba(29,77,71,.1); }
+html[data-theme='day'] .entry-time { color: #657873; }
 html[data-theme='day'] .play-btn { border-color: rgba(52,87,120,.25); background: #e0e9f3; color: #345778; }
 html[data-theme='day'] .play-btn:hover { border-color: #345778; }
+html[data-theme='day'] .play-btn.labelled { border-color: rgba(91,71,120,.25); background: #ebe4f3; color: #5b4778; }
+html[data-theme='day'] .play-btn.labelled:hover { border-color: #5b4778; }
 html[data-theme='day'] .mic-btn:not(.listening) { border-color: #155e57; background: linear-gradient(120deg, #1d6b63, #12504a); color: #fff; }

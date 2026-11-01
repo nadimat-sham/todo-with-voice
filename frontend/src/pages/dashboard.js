@@ -1,7 +1,9 @@
 import { api } from '../lib/api.js';
 import { mount, pageHeader, card, table, statCard, statIcon, button, bindActions, emptyRow, statusBadge, showToast } from '../lib/ui.js';
 import { escapeHtml, formatDate, today } from '../lib/format.js';
-import { addButtons, openTextTodo, openSpeechTodo, openRecordTodo } from './todos.js';
+import {
+  addButtons, openTextTodo, openSpeechTodo, openRecordTodo, isVoiceTodo, recordingButtons, addedByBadge,
+} from './todos.js';
 
 const NEXT_UP = 5;
 
@@ -14,13 +16,13 @@ export const dashboardPage = {
     const open = todos.filter((t) => !t.is_done);
     const overdue = open.filter((t) => t.due_date && t.due_date < today());
     const dueToday = open.filter((t) => t.due_date === today());
-    const byVoice = todos.filter((t) => t.source !== 'text');
+    const byVoice = todos.filter(isVoiceTodo);
 
     const rows = open.slice(0, NEXT_UP).map((t) => `
       <tr data-href="todos">
-        <td><strong>${escapeHtml(t.title)}</strong></td>
+        <td><strong>${escapeHtml(t.title)}</strong>${recordingButtons(t)}</td>
         <td class="nowrap">${t.due_date ? formatDate(t.due_date) : '<span class="muted">—</span>'}${t.due_date && t.due_date < today() ? ` ${statusBadge('overdue')}` : ''}</td>
-        <td>${statusBadge(t.source)}</td>
+        <td>${addedByBadge(t)}</td>
       </tr>`).join('');
 
     const page = mount(main, `
@@ -34,7 +36,7 @@ export const dashboardPage = {
         <div class="stats-grid">
           ${statCard(statIcon('todo'), 'Open', String(open.length), 'Todos still to do')}
           ${statCard(statIcon('warning'), 'Overdue', String(overdue.length), 'Open todos past their due date')}
-          ${statCard(statIcon('mic'), 'Added by voice', String(byVoice.length), 'Todos you spoke (voice to text) or recorded')}
+          ${statCard(statIcon('mic'), 'Added by voice', String(byVoice.length), 'Todos spoken (voice to text) or recorded, or holding such entries')}
           ${statCard(statIcon('active'), 'Due today', String(dueToday.length), 'Open todos due today')}
         </div>
         ${card('Next up', table([

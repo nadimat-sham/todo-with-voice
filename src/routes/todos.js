@@ -12,9 +12,12 @@ router.patch("/:id/done", todoController.setDone);
 
 router.delete("/:id", todoController.remove);
 
-// A voice todo's recording (the audio itself is the PUT body)
-router.put("/:id/audio", todoController.readAudio, todoController.saveAudio);
-router.get("/:id/audio", todoController.getAudio);
-router.delete("/:id/audio", todoController.removeAudio);
+// A todo's entries: typed / voice-to-text words, or a recording (whose audio
+// is the POST body)
+router.post("/:id/entries", todoController.addEntry);
+router.post("/:id/entries/recording", todoController.readAudio, todoController.addRecording);
+router.put("/:id/entries/:entryId", todoController.updateEntry);
+router.delete("/:id/entries/:entryId", todoController.removeEntry);
+router.get("/:id/entries/:entryId/audio", todoController.getAudio);
 
 module.exports = router;
